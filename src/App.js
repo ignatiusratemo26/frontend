@@ -16,6 +16,7 @@ import NotFound from './pages/NotFound';
 import axios from 'axios';
 import { CartContext, CartContextProvider } from './components/CartContext';
 import MyPurchases from './pages/MyPurchases';
+import Packages from './pages/Packages';
 
 const API_URL="http://localhost:4000/";
 axios.defaults.baseURL = API_URL;
@@ -25,6 +26,7 @@ function App() {
   const [cartItems, setCartItems] = useState([]);
   const [showCart, setShowCart] = useState(false);
   const [products, setProducts] = useState([]);
+  const [packages, setPackages] = useState([]);
   const [currentPage, setCurrentPage] = useState('home');
 
   useEffect(() => {
@@ -86,7 +88,8 @@ function App() {
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/cart" element={<Cart cartItems={cartItems} removeFromCart={removeFromCart} />} />
                 <Route path="/profile/mypurchases" element={<MyPurchases />} />
-                <Route path="*" element={<NotFound />} />c
+                <Route path="/packages" element={<Packages packages={packages} />} />
+                <Route path="*" element={<NotFound />} />
               </Routes>
             )}
           </main>
