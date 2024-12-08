@@ -3,6 +3,8 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import { UserContext } from "../UserContext";
 import axios from "axios";
 import MyPurchases from "./MyPurchases";
+import { Box, Button, Typography, Divider, List, ListItem, ListItemText, ListItemIcon, Drawer } from "@mui/material";
+import { AccountCircle, ShoppingCart, Settings, Logout } from "@mui/icons-material";
 
 export default function ProfilePage() {
     const [redirect, setRedirect] = useState(null);
@@ -19,7 +21,7 @@ export default function ProfilePage() {
     }
 
     if (!ready) {
-        return <div className="flex justify-center items-center h-screen">Loading...</div>;
+        return <Box display="flex" justifyContent="center" alignItems="center" height="100vh">Loading...</Box>;
     }
 
     if (ready && !user && !redirect) {
@@ -31,39 +33,54 @@ export default function ProfilePage() {
     }
 
     return (
-        <div className="container mx-auto px-4 py-8">
-            <h2 className="text-3xl font-bold mb-4">Profile</h2>
-            <div className="flex flex-col md:flex-row">
-                <div className="md:w-1/4 mb-4 md:mb-0">
-                    <nav className="space-y-2">
-                        <Link to="/profile" className={`block p-2 rounded ${subpage === 'profile' ? 'bg-red-300 text-white' : 'bg-gray-200'}`}>Profile</Link>
-                        <Link to="/profile/mypurchases" className={`block p-2 rounded ${subpage === 'mypurchases' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}>My Purchases</Link>
-                        <Link to="/profile/settings" className={`block p-2 rounded ${subpage === 'settings' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}>Settings</Link>
-                        <button onClick={logout} className="block w-full p-2 rounded bg-red-800 text-white">Logout</button>
-                    </nav>
-                </div>
-                <div className="md:w-3/4 p-4 bg-white rounded-lg shadow-md">
-                    {subpage === 'profile' && (
-                        <div>
-                            <h3 className="text-2xl font-semibold mb-4">Welcome, {user.name}</h3>
-                            <p>Email: {user.email}</p>
-                        </div>
+        <Box className="container" sx={{ maxWidth: 1200, mx: "auto", px: 4, py: 8 }}>
+            <Typography variant="h4" component="h2" gutterBottom>
+                Profile
+            </Typography>
+            <Box display="flex" sx={{ flexDirection: { xs: "column", md: "row" } }}>
+                <Box sx={{ width: { xs: "100%", md: "25%" }, mb: { xs: 2, md: 0 }, pr: 2 }}>
+                    <List sx={{ width: "100%", bgcolor: "background.paper" }}>
+                        <ListItem button component={Link} to="/profile" selected={subpage === "profile"}>
+                            <ListItemIcon><AccountCircle /></ListItemIcon>
+                            <ListItemText primary="Profile" />
+                        </ListItem>
+                        <ListItem button component={Link} to="/profile/mypurchases" selected={subpage === "mypurchases"}>
+                            <ListItemIcon><ShoppingCart /></ListItemIcon>
+                            <ListItemText primary="My Purchases" />
+                        </ListItem>
+                        <ListItem button component={Link} to="/profile/settings" selected={subpage === "settings"}>
+                            <ListItemIcon><Settings /></ListItemIcon>
+                            <ListItemText primary="Settings" />
+                        </ListItem>
+                        <ListItem button onClick={logout}>
+                            <ListItemIcon><Logout /></ListItemIcon>
+                            <ListItemText primary="Logout" />
+                        </ListItem>
+                    </List>
+                </Box>
+
+                <Box sx={{ width: { xs: "100%", md: "75%" }, p: 3, bgcolor: "background.paper", borderRadius: 2, boxShadow: 2 }}>
+                    {subpage === "profile" && (
+                        <Box>
+                            <Typography variant="h5" component="h3" gutterBottom>
+                                Hello, {user.name}
+                            </Typography>
+                            <Typography variant="body1" paragraph>Email: {user.email}</Typography>
+                        </Box>
                     )}
-                    {subpage === 'mypurchases' && (
-                        // <div>
-                        //     <h3 className="text-2xl font-semibold mb-4">Your Orders</h3>
-                        //     <p>Order details go here</p>
-                        // </div>
+                    {subpage === "mypurchases" && (
                         <MyPurchases />
                     )}
-                    {subpage === 'settings' && (
-                        <div>
-                            <h3 className="text-2xl font-semibold mb-4">Settings</h3>
-                            <p>Settings go here</p>
-                        </div>
+                    {subpage === "settings" && (
+                        <Box>
+                            <Typography variant="h5" component="h3" gutterBottom>
+                                Settings
+                            </Typography>
+                            <Typography variant="body1" paragraph>Settings content goes here.</Typography>
+                        </Box>
                     )}
-                </div>
-            </div>
-        </div>
+                </Box>
+            </Box>
+        </Box>
     );
 }

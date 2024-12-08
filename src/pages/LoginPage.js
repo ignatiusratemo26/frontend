@@ -1,73 +1,124 @@
-// FILE: pages/LoginPage.js
 import React, { useState, useContext } from 'react';
-import {Link, Navigate} from "react-router-dom";
+import { Link, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import { UserContext } from '../UserContext';
 import { useNavigate } from 'react-router-dom';
+import {
+  TextField,
+  Button,
+  Typography,
+  Box,
+  Link as MuiLink,
+} from '@mui/material';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const {setUser} = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
   const [redirect, setRedirect] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (ev) => {
     ev.preventDefault();
     try {
-        const response = await axios.post('/api/login', { email, password });
-        setUser(response.data);
-        setRedirect(true);
-        navigate('/');
-
-      // Handle successful login (e.g., set user context, redirect)
-    } catch (e){
-        if (e.response && e.response.status === 401) {
-            console.error('Unauthorized: Incorrect email or password');
-        } else {
-            console.error('Login failed', e);
-        }
-        alert('Login failed');
+      const response = await axios.post('/api/login', { email, password });
+      setUser(response.data);
+      setRedirect(true);
+      navigate('/');
+    } catch (e) {
+      if (e.response && e.response.status === 401) {
+        console.error('Unauthorized: Incorrect email or password');
+      } else {
+        console.error('Login failed', e);
+      }
+      alert('Login failed');
     }
 
-
     if (redirect) {
-      return <Navigate to={'/'} />
+      return <Navigate to="/" />;
     }
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h2 className="text-2xl font-bold mb-4">Login</h2>
-      <form onSubmit={handleLogin}>
-        <div className="mb-4">
-          <label className="block text-gray-700">Email</label>
-          <input
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #ff7eb3, #845ec2)',
+        padding: 2,
+      }}
+    >
+      <Box
+        sx={{
+          width: '100%',
+          maxWidth: 400,
+          backgroundColor: 'white',
+          padding: 4,
+          borderRadius: 2,
+          boxShadow: 3,
+        }}
+      >
+        <Typography variant="h4" align="center" fontWeight="bold" gutterBottom>
+          Login
+        </Typography>
+        <Typography align="center" sx={{ mb: 2 }}>
+          Don't have an account yet?{' '}
+          <MuiLink component={Link} to="/register" underline="hover" color="primary">
+            Register now
+          </MuiLink>
+        </Typography>
+        <form onSubmit={handleLogin}>
+          <TextField
+            label="Email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-8/12 px-3 py-2 border rounded"
+            fullWidth
+            margin="normal"
             required
           />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">Password</label>
-          <input
+          <TextField
+            label="Password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-8/12 px-3 py-2 border rounded"
+            fullWidth
+            margin="normal"
             required
           />
-        </div>
-        <button type="submit" className="bg-[#2c3e50] text-white px-4 py-2 rounded">
-          Login
-        </button>
-          <div className="text-center py-2 text-gray-500">
-            Don't have an account yet? <Link className="underline text-black" to={'/register'}>Register now</Link>
-        </div>
-      </form>
-    </div>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{
+              backgroundColor: '#845ec2',
+              '&:hover': { backgroundColor: '#6d48a8' },
+              py: 1.5,
+              mt: 2,
+            }}
+          >
+            Login
+          </Button>
+        </form>
+        <Typography
+          variant="body2"
+          align="center"
+          sx={{ mt: 2, color: 'text.secondary' }}
+        >
+          By logging in, you agree to our{' '}
+          <MuiLink href="#" underline="hover">
+            terms of service
+          </MuiLink>{' '}
+          and{' '}
+          <MuiLink href="#" underline="hover">
+            privacy policy
+          </MuiLink>.
+        </Typography>
+      </Box>
+    </Box>
   );
 };
 

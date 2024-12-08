@@ -22,8 +22,8 @@ const HomePage = ({ setCurrentPage }) => {
     loadSubscriptions();
   }, []);
 
-  const handleJoinNowClick = () => {
-    navigate("/login");
+  const handleBrowseBooksClick = () => {
+    navigate("/shop");
   };
 
   return (
@@ -35,12 +35,12 @@ const HomePage = ({ setCurrentPage }) => {
           Join our online book club and dive into a world of literary adventures!
         </p>
         <Button
-          onClick={handleJoinNowClick}
+          onClick={handleBrowseBooksClick}
           variant="contained"
           style={{ backgroundColor: "#710193" }}
           size="large"
         >
-          Get Started
+          Browse our library
         </Button>
       </section>
 
