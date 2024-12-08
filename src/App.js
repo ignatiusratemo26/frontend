@@ -10,6 +10,7 @@ import ProfilePage from './pages/ProfilePage';
 import Footer from './components/Footer';
 import Cart from './components/Cart';
 import { fetchProducts } from './Api';
+import { fetchSubscriptions } from './Api';
 import ShopPage from './pages/ShopPage';
 import NotFound from './pages/NotFound';
 import axios from 'axios';
@@ -35,8 +36,22 @@ function App() {
         console.error('Failed to load products:', error);
       }
     };
+
+    const loadSubscriptions = async () => {
+      try {
+        const data = await fetchSubscriptions();
+        console.log('Subscriptions:', data);
+      } catch (error) {
+        console.error('Failed to load subscriptions:', error);
+      }
+    };
+
+    loadSubscriptions();
     loadProducts();
   }, []);
+
+  
+
 
   const toggleCart = () => {
     setShowCart(!showCart);

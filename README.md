@@ -7,7 +7,7 @@ Database: MongoDB for storage.
 
 
 ### Key Features:
-- **Product Catalog:** Displays a list of shoes with product details like price, description, and images.
+- **Product Catalog:** Displays a list of products details like price, description, and images.
 - **Shopping Cart:** Allows users to add/remove items from the cart and displays the total price.
 - **Homepage Slider:** Shows popular packages in a slider format with animations.
 - **Filter Products:** Users can filter products based on categories ......
@@ -31,7 +31,7 @@ Database: MongoDB for storage.
 1. Clone the Repository:
    ```bash
    git clone https://github.com/ignatiusratemo26/readit_frontend.git
-   cd shoeshop-ecommerce
+   cd frontend
 
 2. Install dependencies:
    ```bash

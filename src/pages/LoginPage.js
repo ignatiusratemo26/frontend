@@ -60,7 +60,7 @@ const LoginPage = () => {
             required
           />
         </div>
-        <button type="submit" className="bg-red-800 text-white px-4 py-2 rounded">
+        <button type="submit" className="bg-[#2c3e50] text-white px-4 py-2 rounded">
           Login
         </button>
           <div className="text-center py-2 text-gray-500">

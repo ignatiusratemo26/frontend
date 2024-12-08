@@ -3,9 +3,9 @@ import { FaShoePrints, FaShoppingCart, FaUser, FaBars, FaTimes } from 'react-ico
 import { Link } from 'react-router-dom';
 import { UserContext } from '../UserContext';
 import { CartContext } from './CartContext';
+import { BookOpen, Gift, MessageCircle, Coffee, ShoppingBag, Heart } from 'lucide-react'
 
-
-const Header = ({ toggleCart }) => {
+const Header = ({ toggleCart, setCurrentPage }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { cartItems } = useContext(CartContext);
   const {user} = useContext(UserContext);
@@ -15,56 +15,26 @@ const Header = ({ toggleCart }) => {
   };
 
   return (
-    <header className="bg-red-900 p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        {/* Logo Section */}
-        <div className="flex items-center text-white">
-          <FaShoePrints className="text-2xl mr-2" />
-          <h1 className="font-bold text-lg md:text-2xl text-white">Ndula_urban</h1>
-        </div>
+     <header className="bg-[#710193] text-white py-4">
+     <div className="container mx-auto px-4 flex justify-between items-center">
+       <div className="flex items-center space-x-2">
+        <Link to="/" className="flex items-center space-x-2">
+         <BookOpen className="h-8 w-8" />
+         <span  className="text-2xl font-bold">Read It</span>
+        </Link>
+       </div>
+       <nav>
+         <ul className="flex space-x-4">
+          <Link to="/shop" className="hover:text-[#ecf0f1]">
+           <li className="hover:text-[#ecf0f1]">Shop</li>
+           </Link>
+           <li><a href="#packages" className="hover:text-[#ecf0f1]">Packages</a></li>
+           <li><a href="#services" className="hover:text-[#ecf0f1]">Services</a></li>
+           <li><a href="#contact" className="hover:text-[#ecf0f1]">Contact</a></li>
+         </ul>
+       </nav>
 
-        {/* Hamburger Menu for Small Screens */}
-        <div className="sm:hidden">
-          <button onClick={toggleMenu} className="icon-button">
-            {isMenuOpen ? <FaTimes className="text-2xl" /> : <FaBars className="text-2xl" />}
-          </button>
-        </div>
 
-        {/* Navigation Links */}
-        <nav
-          className={`${
-            isMenuOpen ? 'block' : 'hidden'
-          } ml-10 absolute top-16 left-0  lg:bg-transparent sm:static sm:flex sm:space-x-4 p-4 sm:p-0 shadow-md sm:shadow-none z-10 bg-red-900`}
-        >
-          <Link
-            to="/"
-            className="nav-link hover:font-bold block sm:inline text-gray-200 lg:bg-transparent "
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Home
-          </Link>
-          <Link
-            to="/shop"
-            className="nav-link hover:font-bold block sm:inline text-gray-200 lg:bg-transparent"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Shop
-          </Link>
-          <Link
-            to="/about"
-            className="nav-link hover:font-bold block sm:inline text-gray-200 lg:bg-transparent "
-            onClick={() => setIsMenuOpen(false)}
-          >
-            About
-          </Link>
-          <Link
-            to="/contact"
-            className="nav-link hover:font-bold block lg:bg-transparent sm:inline text-gray-200 "
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Contact
-          </Link>
-            </nav>
 
             {/* Cart and User Icons */}
             <div className="flex items-center space-x-4">
@@ -80,7 +50,7 @@ const Header = ({ toggleCart }) => {
 
 
               <Link to={user?'/profile':'/login'} className="flex items-center gap-2 border border-gray-300 rounded-none py-2 px-4 ">
-
+  
             <div className="bg-gray-500 text-white rounded-full border border-gray-500 overflow-hidden">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 relative top-1">
                 <path fillRule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clipRule="evenodd" />
@@ -93,8 +63,8 @@ const Header = ({ toggleCart }) => {
             )}
           </Link>
         </div>
-      </div>
-    </header>
+     </div>
+   </header>
   );
 };
 

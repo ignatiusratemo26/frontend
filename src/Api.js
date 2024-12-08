@@ -15,6 +15,16 @@ export const fetchProducts = async () => {
     }
 };
 
+export const fetchSubscriptions = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/subscriptions`);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching subscriptions:", error);
+        throw error;
+    }
+}
+
 
 export const fetchPopularProducts = async () => {
     try {
