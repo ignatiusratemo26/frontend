@@ -1,29 +1,128 @@
-import React from 'react';
+import React, { useState } from 'react';
+import {
+  Box,
+  TextField,
+  Button,
+  Typography,
+  Container,
+  Paper,
+  Snackbar,
+  Alert,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Grid2,
+  Grid,
+} from '@mui/material';
+import ContactMailIcon from '@mui/icons-material/ContactMail';
+import axios from 'axios';
 
-const ContactPage = () => (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl text-black font-bold text-center mb-8">Contact Us</h1>
-      <div className="bg-white p-6 rounded-lg shadow-md">
-        <p className="mb-4">We'd love to hear from you! If you have any questions, comments, or concerns, please don't hesitate to reach out.</p>
-        <div className="mb-4">
-          <h2 className="text-xl font-semibold mb-2">Customer Service</h2>
-          <p>Email: ndula.urban@gmail.com</p>
-          <p>Phone: +254 716 176 560</p>
-        </div>
-        <div className="mb-4">
-          <h2 className="text-xl font-semibold mb-2">Business Hours</h2>
-          <p>Monday - Friday: 9am - 5pm GMT-3</p>
-          <p>Saturday: 10am - 4pm GMT-3</p>
-          <p>Sunday: Closed</p>
-        </div>
-        <div>
-          <h2 className="text-xl font-semibold mb-2">Address</h2>
-          <p>Kiwanja Market</p>
-          <p>Kahawa North, Nairobi City</p>
-          <p>Kenya</p>
-        </div>
-      </div>
-    </div>
+const ContactPage = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+  });
+
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // Simulating an API call with axios
+      await axios.post('/api/contact', formData);
+
+      // Clear fields and show dialog
+      setFormData({ name: '', email: '', message: '' });
+      setDialogOpen(true);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
+
+  return (
+    <Container maxWidth="sm" sx={{ marginTop: 5, marginBottom: 5 }}>
+      <Paper elevation={3} sx={{ padding: 3 }}>
+        <Box display="flex" justifyContent="center" alignItems="center" mb={3}>
+          <ContactMailIcon sx={{ fontSize: 50, color: '#1976d2' }} />
+        </Box>
+        <Typography variant="h4" align="center" gutterBottom>
+          Contact Us
+        </Typography>
+        <Typography variant="body1" align="center" color="text.secondary" mb={3}>
+          We'd love to hear from you! Fill out the form below to get in touch.
+        </Typography>
+        <Box component="form" onSubmit={handleSubmit}>
+        <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                variant="outlined"
+                label="Your Name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                variant="outlined"
+                label="Your Email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                variant="outlined"
+                label="Your Message"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                multiline
+                rows={4}
+                required
+              />
+            </Grid>
+          </Grid>
+          <Box display="flex" justifyContent="center" mt={3}>
+            <Button variant="contained" color="primary" type="submit">
+              Send Message
+            </Button>
+          </Box>
+        </Box>
+      </Paper>
+
+      {/* Dialog for successful submission */}
+      <Dialog open={dialogOpen} onClose={handleDialogClose}>
+        <DialogTitle>Submission Successful</DialogTitle>
+        <DialogContent>
+          <Typography>Your message has been sent successfully!</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Container>
   );
-  export default ContactPage;
-  
+};
+
+export default ContactPage;

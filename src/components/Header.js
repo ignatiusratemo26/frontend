@@ -32,7 +32,9 @@ const Header = ({ toggleCart, setCurrentPage }) => {
            <li className="hover:text-[#ecf0f1]">Packages</li>
             </Link>
            <li><a href="#services" className="hover:text-[#ecf0f1]">Services</a></li>
-           <li><a href="#contact" className="hover:text-[#ecf0f1]">Contact</a></li>
+           <Link to="/contact" className="hover:text-[#ecf0f1]">
+           <li className="hover:text-[#ecf0f1]">Contact</li>
+            </Link>
          </ul>
        </nav>
 
